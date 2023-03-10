@@ -1,8 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url("https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap");
 
 @layer base {
   html,
