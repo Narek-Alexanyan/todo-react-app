@@ -9,5 +9,22 @@
   #root,
   .app {
     font-family: "Tilt Neon", cursive;
+    @apply bg-todo-white;
   }
+}
+
+@layer components {
+  .todo-container {
+    @apply 2xl:max-w-[1280px] xl:max-w-[1024px] lg:max-w-[768px] px-4 mx-auto
+  }
+}
+
+input[type="checkbox"] {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
