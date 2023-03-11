@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../../components/Logo";
 import IconButton from "../../components/UI/buttons/IconButton";
 import Sidebar from "../../components/sidebar/Sidebar";
+import TodoList from "../../components/todo/TodoList";
 
 const TodoPage = () => {
   return (
@@ -25,8 +26,9 @@ const TodoPage = () => {
           </svg>
         </IconButton>
       </div>
-      <div className="mt-10 flex">
+      <div className="mt-10 flex gap-4">
         <Sidebar />
+        <TodoList />
       </div>
     </div>
   );

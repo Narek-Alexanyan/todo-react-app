@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 
-const TodoCheckbox = ({ label }) => {
-  const [isChecked, setIsChecked] = useState(false);
+const TodoCheckbox = ({ label, isChecked, onChange }) => {
 
   return (
     <label className="flex gap-1">
-      <input type="checkbox" onChange={() => setIsChecked((prev) => !prev)} />
+      <input type="checkbox" onChange={onChange} />
       <svg
         className={`inline-block w-4 h-4 bg-todo-white border rounded-sm ${
           isChecked ? "border-todo-black" : "border-todo-gray"

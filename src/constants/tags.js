@@ -1,22 +1,22 @@
 export const tags = [
   {
     id: 1,
-    name: "work",
+    value: "work",
     color: "#D2CEFF"
   },
   {
     id: 2,
-    name: "study",
+    value: "study",
     color: "#D1E5F7"
   },
   {
     id: 3,
-    name: "entertainment",
+    value: "entertainment",
     color: "#FFCECE"
   },
   {
     id: 4,
-    name: "family",
+    value: "family",
     color: "#DAF2D6"
   },
 ]
