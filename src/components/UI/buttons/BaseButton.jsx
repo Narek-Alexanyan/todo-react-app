@@ -1,6 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 
-const BaseButton = ({ children, onClick, className }) => {
+const BaseButton = memo(({ children, onClick, className }) => {
   return (
     <button
       className={[
@@ -12,6 +12,6 @@ const BaseButton = ({ children, onClick, className }) => {
       {children}
     </button>
   );
-};
+});
 
 export default BaseButton;

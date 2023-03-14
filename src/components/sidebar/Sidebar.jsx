@@ -6,9 +6,18 @@ import illustration from "../../assets/images/illustrations/illustration-1.png";
 
 const Sidebar = () => {
   const [hideCompleted, setHideCompleted] = useState(false);
+
+  const handleSelectedList = (selectedList) => {
+    console.log(selectedList);
+  };
+
   return (
     <div>
-      <TagList list={tags} />
+      <TagList
+        list={tags}
+        className="flex-col gap-8"
+        handleList={handleSelectedList}
+      />
       <div className="mt-10">
         <TodoCheckbox
           label="Hide Done Tasks"

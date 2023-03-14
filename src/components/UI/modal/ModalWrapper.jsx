@@ -1,22 +1,28 @@
-import React, { Children, useRef } from "react";
+import React, { useRef } from "react";
 import { CSSTransition } from "react-transition-group";
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
-const ModalWrapper = ({ isOpen, children }) => {
-  const modalRef = useRef(null);
+const ModalWrapper = ({ isOpen, setIsOpen, children }) => {
+  const transitionRef = useRef(null);
+
+  useOnClickOutside(transitionRef, () => setIsOpen(false));
+
   return (
-    <div className="relative w-full h-screen bg-todo-gray">
-      <CSSTransition
-        in={isOpen}
-        modalRef={modalRef}
-        timeout={300}
-        classNames="alert"
-        unmountOnExit
+    <CSSTransition
+      in={isOpen}
+      nodeRef={transitionRef}
+      timeout={300}
+      classNames="popup"
+      unmountOnExit
+    >
+      <div
+        className="fixed z-20 top-0 left-0 w-full h-screen bg-todo-gray/20"
       >
-        <div ref={modalRef} className="fixed top-1/2 left-1/2">
+        <div ref={transitionRef} className="w-fit mx-auto mt-32">
           {children}
         </div>
-      </CSSTransition>
-    </div>
+      </div>
+    </CSSTransition>
   );
 };
 

@@ -1,0 +1,47 @@
+{
+  "todoList": [
+    {
+      "id": 1,
+      "title": "The first task title",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam, quaerat vero vel quisquam sed voluptatem dicta amet neque! Ab.",
+      "completed": true,
+      "tags": [
+        {
+          "id": 1,
+          "value": "work"
+        },
+        {
+          "id": 2,
+          "value": "study"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "The second task title",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "completed": false,
+      "tags": [
+        {
+          "id": 1,
+          "value": "work"
+        },
+        {
+          "id": 2,
+          "value": "family"
+        }
+      ]
+    },
+    {
+      "title": "the forth task ticket",
+      "description": "Lorem ipsum dorem sit",
+      "tags": [
+        {
+          "id": 1,
+          "value": "work"
+        }
+      ],
+      "id": 4
+    }
+  ]
+}

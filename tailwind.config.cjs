@@ -19,6 +19,7 @@ module.exports = {
         "todo-white": "#FFFFFF",
         "todo-black": "#69665C",
         "todo-gray": "#B2AFA1",
+        "todo-light-gray": "#f9f9f8",
         "todo-yellow": "#FFF9DE",
         "todo-blue": "#D1E5F7",
         "todo-green": "#DAF2D6",
