@@ -9,7 +9,8 @@ const initialState = {
     isOpen: false,
     isEdit: false
   },
-  editedItemData: {}
+  editedItemData: {},
+  isHideCompleted: false
 };
 
 export const fetchTodoList = createAsyncThunk("todo/fetchTodoList",
@@ -80,6 +81,9 @@ export const todoSlice = createSlice({
     },
     setEditedItemData: (state, action) => {
       state.editedItemData = action.payload
+    },
+    setIsHideCompleted: (state, action) => {
+      state.isHideCompleted = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -97,6 +101,6 @@ export const todoSlice = createSlice({
   }
 })
 
-export const { setTodoList, setTodoModal, setEditedItemData } = todoSlice.actions;
+export const { setTodoList, setTodoModal, setEditedItemData, setIsHideCompleted } = todoSlice.actions;
 
 export default todoSlice.reducer;

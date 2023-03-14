@@ -24,7 +24,7 @@
       "id": 2,
       "title": "The second task title edited.",
       "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-      "completed": true,
+      "completed": false,
       "tags": [
         {
           "id": 1,

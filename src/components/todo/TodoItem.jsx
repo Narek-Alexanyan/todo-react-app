@@ -69,7 +69,11 @@ const TodoItem = ({ todoData }) => {
   return (
     <div className="bg-todo-yellow rounded p-3 w-[320px] h-fit flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <h5 className="text-xl text-todo-black font-medium">
+        <h5
+          className={`text-xl text-todo-black font-medium ${
+            todoData.completed ? "line-through" : ""
+          } `}
+        >
           {todoData.title}
         </h5>
         <div ref={dropDownRef} className="relative">
@@ -84,7 +88,13 @@ const TodoItem = ({ todoData }) => {
           />
         </div>
       </div>
-      <div className="text-base text-todo-gray">{todoData.description}</div>
+      <div
+        className={`text-base text-todo-gray ${
+          todoData.completed ? "line-through" : ""
+        }`}
+      >
+        {todoData.description}
+      </div>
       <div className="flex justify-between items-center">
         <div className="flex gap-2">
           {todoData.tags.map((tag, index) => (

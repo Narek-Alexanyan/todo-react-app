@@ -3,9 +3,13 @@ import TagList from "../tags/TagList";
 import { tags } from "../../constants/tags";
 import TodoCheckbox from "../UI/checkbox/TodoCheckbox";
 import illustration from "../../assets/images/illustrations/illustration-1.png";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsHideCompleted } from "../../features/todo/todoSlice";
 
 const Sidebar = () => {
-  const [hideCompleted, setHideCompleted] = useState(false);
+  const dispatch = useDispatch();
+
+  const isHideCompleted = useSelector((state) => state.todo.isHideCompleted);
 
   const handleSelectedList = (selectedList) => {
     console.log(selectedList);
@@ -21,8 +25,8 @@ const Sidebar = () => {
       <div className="mt-10">
         <TodoCheckbox
           label="Hide Done Tasks"
-          isChecked={hideCompleted}
-          onChange={() => setHideCompleted((prev) => !prev)}
+          isChecked={isHideCompleted}
+          onChange={() => dispatch(setIsHideCompleted(!isHideCompleted))}
         />
       </div>
       <div className="mt-20">
