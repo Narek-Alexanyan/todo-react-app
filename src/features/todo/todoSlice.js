@@ -5,7 +5,11 @@ const initialState = {
   todoList: [],
   status: "",
   error: null,
-  isTodoModalOpen: false
+  todoModal: {
+    isOpen: false,
+    isEdit: false
+  },
+  editedItemData: {}
 };
 
 export const fetchTodoList = createAsyncThunk("todo/fetchTodoList",
@@ -23,7 +27,7 @@ export const fetchTodoList = createAsyncThunk("todo/fetchTodoList",
 )
 
 export const createTodo = createAsyncThunk("todo/createTodo",
-  async (todoData, {rejectWithValue, dispatch}) => {
+  async (todoData, { rejectWithValue, dispatch }) => {
     try {
       const result = await axios.post("http://localhost:8080/todoList", todoData)
 
@@ -71,8 +75,11 @@ export const todoSlice = createSlice({
     setTodoList: (state, action) => {
       state.todoList = action.payload
     },
-    setIsTodoModalOpen: (state, action) => {
-      state.isTodoModalOpen = action.payload
+    setTodoModal: (state, action) => {
+      state.todoModal = action.payload
+    },
+    setEditedItemData: (state, action) => {
+      state.editedItemData = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -90,6 +97,6 @@ export const todoSlice = createSlice({
   }
 })
 
-export const { setTodoList, setIsTodoModalOpen } = todoSlice.actions;
+export const { setTodoList, setTodoModal, setEditedItemData } = todoSlice.actions;
 
 export default todoSlice.reducer;

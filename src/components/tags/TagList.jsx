@@ -1,9 +1,9 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import TagCircle from "./TagCircle";
 import { getTagColor } from "../../helpers/getTagColor";
 import { useDidMountEffect } from "../../hooks/useDidMountEffect";
 
-const TagList = memo(({ list, className, handleList }) => {
+const TagList = memo(({ list, className, handleList, tags = [] }) => {
   const [selectedTags, setSelectedTags] = useState([]);
 
   useDidMountEffect(() => {
@@ -16,8 +16,12 @@ const TagList = memo(({ list, className, handleList }) => {
     handleList(updatedSelectedTags);
   }, [selectedTags]);
 
+  useEffect(() => {
+    if (tags.length) setSelectedTags(tags);
+  }, []);
+
   const handleSelectedTags = (tag) => {
-    if (selectedTags.includes(tag)) {
+    if (selectedTags.some((item) => item.id === tag.id)) {
       let tags = selectedTags.filter((el) => el.id !== tag.id);
 
       setSelectedTags(tags);

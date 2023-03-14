@@ -6,7 +6,12 @@ import TodoCheckbox from "../UI/checkbox/TodoCheckbox";
 import { getTagColor } from "../../helpers/getTagColor";
 import Dropdown from "../UI/modal/Dropdown";
 import { useDispatch } from "react-redux";
-import { deleteTodoItem, editTodoItem } from "../../features/todo/todoSlice";
+import {
+  deleteTodoItem,
+  editTodoItem,
+  setEditedItemData,
+  setTodoModal,
+} from "../../features/todo/todoSlice";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 const dropDownList = [
@@ -24,16 +29,23 @@ const dropDownList = [
 
 const TodoItem = ({ todoData }) => {
   const dispatch = useDispatch();
-  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
   const dropDownRef = useRef(null);
+
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
   useOnClickOutside(dropDownRef, () => setIsDropDownOpen(false));
 
   const handleDropDownAction = (action) => {
     switch (action) {
       case "edit":
-        console.log("edit");
+        dispatch(setEditedItemData(todoData));
+        dispatch(
+          setTodoModal({
+            isOpen: true,
+            isEdit: true,
+          })
+        );
         break;
       case "delete":
         dispatch(deleteTodoItem(todoData.id));

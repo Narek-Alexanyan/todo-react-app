@@ -4,19 +4,27 @@ import IconButton from "../../components/UI/buttons/IconButton";
 import Sidebar from "../../components/sidebar/Sidebar";
 import TodoList from "../../components/todo/TodoList";
 import AddTodo from "../../components/todo/AddTodo";
-import { setIsTodoModalOpen } from "../../features/todo/todoSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { setTodoModal } from "../../features/todo/todoSlice";
+import { useDispatch } from "react-redux";
 
 const TodoPage = () => {
   const dispatch = useDispatch();
-  const isModalOpen = useSelector((state) => state.todo.isTodoModalOpen);
+
+  const toggleModal = () => {
+    dispatch(
+      setTodoModal({
+        isOpen: true,
+        isEdit: false,
+      })
+    );
+  };
 
   return (
     <>
       <div className="todo-container py-8">
         <div className="flex justify-between items-center max-w-full">
           <Logo />
-          <IconButton onClick={() => dispatch(setIsTodoModalOpen(true))}>
+          <IconButton onClick={toggleModal}>
             <svg
               width="28"
               height="28"
@@ -38,10 +46,7 @@ const TodoPage = () => {
           <TodoList />
         </div>
       </div>
-      <AddTodo
-        isModalOpen={isModalOpen}
-        setIsModalOpen={() => dispatch(setIsTodoModalOpen())}
-      />
+      <AddTodo />
     </>
   );
 };
