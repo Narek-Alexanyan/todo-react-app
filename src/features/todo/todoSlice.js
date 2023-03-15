@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
   todoList: [],
+  todoListTotalCount: 0,
   status: "",
   error: null,
   todoModal: {
@@ -17,11 +18,12 @@ const initialState = {
 };
 
 export const fetchTodoList = createAsyncThunk("todo/fetchTodoList",
-  async (_, { rejectWithValue, dispatch }) => {
+  async ({ page, limit }, { rejectWithValue, dispatch }) => {
     try {
-      const result = await axios.get("http://localhost:8080/todoList")
+      const result = await axios.get(`http://localhost:8080/todoList?_page=${page}&_limit=${limit}`)
 
       dispatch(setTodoList(result.data))
+      dispatch(setTodoListTotalCount(result.headers["x-total-count"]))
 
       return result.data
     } catch (error) {
@@ -35,7 +37,7 @@ export const createTodo = createAsyncThunk("todo/createTodo",
     try {
       const result = await axios.post("http://localhost:8080/todoList", todoData)
 
-      dispatch(fetchTodoList())
+      dispatch(fetchTodoList({ page: 1, limit: 6 }))
 
       return result.data
     } catch (error) {
@@ -49,7 +51,7 @@ export const editTodoItem = createAsyncThunk("todo/editTodoItem",
     try {
       const result = await axios.patch(`http://localhost:8080/todoList/${id}`, updatedItem)
 
-      dispatch(fetchTodoList())
+      dispatch(fetchTodoList({ page: 1, limit: 6 }))
 
       return result.data
     } catch (error) {
@@ -63,7 +65,7 @@ export const deleteTodoItem = createAsyncThunk("todo/deleteTodoItem",
     try {
       const result = await axios.delete(`http://localhost:8080/todoList/${id}`)
 
-      dispatch(fetchTodoList())
+      dispatch(fetchTodoList({ page: 1, limit: 6 }))
 
       return result.data
     } catch (error) {
@@ -78,6 +80,9 @@ export const todoSlice = createSlice({
   reducers: {
     setTodoList: (state, action) => {
       state.todoList = action.payload
+    },
+    setTodoListTotalCount: (state, action) => {
+      state.todoListTotalCount = action.payload
     },
     setTodoModal: (state, action) => {
       state.todoModal = action.payload
@@ -107,6 +112,12 @@ export const todoSlice = createSlice({
   }
 })
 
-export const { setTodoList, setTodoModal, setEditedItemData, setIsHideCompleted, setFilterDependencies } = todoSlice.actions;
+export const { setTodoList,
+  setTodoModal,
+  setEditedItemData,
+  setIsHideCompleted,
+  setFilterDependencies,
+  setTodoListTotalCount
+} = todoSlice.actions;
 
 export default todoSlice.reducer;

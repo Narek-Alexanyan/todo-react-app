@@ -15,7 +15,22 @@
 
 @layer components {
   .todo-container {
-    @apply 2xl:max-w-[1280px] xl:max-w-[1024px] lg:max-w-[768px] px-4 mx-auto
+    @apply 2xl:max-w-[1280px] xl:max-w-[1024px] lg:max-w-[768px] px-4 mx-auto;
+  }
+  .pagination-container {
+    @apply flex list-none;
+  }
+  .pagination-item {
+    @apply px-3 h-8 text-center my-auto mx-1 text-todo-black flex items-center rounded-md text-sm min-w-[32px] hover:bg-todo-gray/10 cursor-pointer;
+  }
+  .pagination-disabled {
+    @apply pointer-events-none hover:cursor-default hover:bg-transparent;
+  }
+  .pagination-dots {
+    @apply bg-transparent cursor-default;
+  }
+  .pagination-active-item {
+    @apply bg-todo-gray/10;
   }
 }
 
