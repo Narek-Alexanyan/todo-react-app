@@ -48,3 +48,23 @@ input[type="checkbox"] {
   transform: scale(0.9);
   transition: opacity 300ms, transform 300ms;
 }
+
+/* custom pretty scrollbar */
+.pretty-scrollbar::-webkit-scrollbar {
+  width: 20px;
+}
+
+.pretty-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.pretty-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+.pretty-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}

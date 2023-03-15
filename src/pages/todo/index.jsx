@@ -41,7 +41,7 @@ const TodoPage = () => {
             </svg>
           </IconButton>
         </div>
-        <div className="mt-10 flex gap-10">
+        <div className="mt-10 flex gap-10 sm:flex-col">
           <Sidebar />
           <TodoList />
         </div>
