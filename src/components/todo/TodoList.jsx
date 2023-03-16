@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import TodoItem from "./TodoItem";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,7 +11,7 @@ import LoadingSpinner from "../UI/spinners/LoadingSpinner.svg";
 
 let PageSize = 6;
 
-const TodoList = () => {
+const TodoList = memo(() => {
   const dispatch = useDispatch();
   const todoList = useSelector((state) => state.todo.todoList);
   const isHideCompleted = useSelector((state) => state.todo.isHideCompleted);
@@ -64,6 +64,6 @@ const TodoList = () => {
       />
     </div>
   );
-};
+});
 
 export default TodoList;

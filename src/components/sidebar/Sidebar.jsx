@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import TagList from "../tags/TagList";
 import { tags } from "../../constants/tags";
 import TodoCheckbox from "../UI/checkbox/TodoCheckbox";
@@ -9,7 +9,7 @@ import {
   setIsHideCompleted,
 } from "../../features/todo/todoSlice";
 
-const Sidebar = () => {
+const Sidebar = memo(() => {
   const dispatch = useDispatch();
 
   const isHideCompleted = useSelector((state) => state.todo.isHideCompleted);
@@ -37,6 +37,6 @@ const Sidebar = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Sidebar;
