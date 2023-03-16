@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "../../components/Logo";
 import IconButton from "../../components/UI/buttons/IconButton";
 import Sidebar from "../../components/sidebar/Sidebar";
 import TodoList from "../../components/todo/TodoList";
 import AddTodo from "../../components/todo/AddTodo";
-import { setTodoModal } from "../../features/todo/todoSlice";
-import { useDispatch } from "react-redux";
+import { fetchTodoList, setTodoModal } from "../../features/todo/todoSlice";
+import { useDispatch, useSelector } from "react-redux";
+import SearchBar from "../../components/UI/fields/SearchBar";
+import { useDebounceEffect } from "../../hooks/useDebounceEffect";
+import { useDidMountEffect } from "../../hooks/useDidMountEffect";
 
 const TodoPage = () => {
   const dispatch = useDispatch();
+
+  const [searchValue, setSearchValue] = useState("");
+
+  const currentPage = useSelector((state) => state.todo.todoListCurrentPage);
+
+  const debouncedSearchValue = useDebounceEffect(searchValue, 500);
+
+  useDidMountEffect(() => {
+    dispatch(
+      fetchTodoList({
+        page: currentPage,
+        query: debouncedSearchValue,
+      })
+    );
+  }, [debouncedSearchValue]);
 
   const toggleModal = () => {
     dispatch(
@@ -43,7 +61,12 @@ const TodoPage = () => {
         </div>
         <div className="mt-10 flex gap-10 sm:flex-col">
           <Sidebar />
-          <TodoList />
+          <div>
+            <div className="w-80 mb-4 sm:mx-auto">
+              <SearchBar value={searchValue} onChange={setSearchValue} />
+            </div>
+            <TodoList />
+          </div>
         </div>
       </div>
       <AddTodo />

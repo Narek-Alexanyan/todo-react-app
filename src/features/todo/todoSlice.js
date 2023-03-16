@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const defaultPageLimit = 6
+
 const initialState = {
   todoList: [],
   todoListTotalCount: 0,
+  todoListCurrentPage: 1,
   status: "",
   error: null,
   todoModal: {
@@ -18,9 +21,9 @@ const initialState = {
 };
 
 export const fetchTodoList = createAsyncThunk("todo/fetchTodoList",
-  async ({ page, limit }, { rejectWithValue, dispatch }) => {
+  async ({ page, limit = defaultPageLimit, query = "" }, { rejectWithValue, dispatch }) => {
     try {
-      const result = await axios.get(`http://localhost:8080/todoList?_page=${page}&_limit=${limit}`)
+      const result = await axios.get(`http://localhost:8080/todoList?_page=${page}&_limit=${limit}&q=${query}`)
 
       dispatch(setTodoList(result.data))
       dispatch(setTodoListTotalCount(result.headers["x-total-count"]))
@@ -33,11 +36,13 @@ export const fetchTodoList = createAsyncThunk("todo/fetchTodoList",
 )
 
 export const createTodo = createAsyncThunk("todo/createTodo",
-  async (todoData, { rejectWithValue, dispatch }) => {
+  async (todoData, { rejectWithValue, dispatch, getState }) => {
+    const { todo } = getState();
+
     try {
       const result = await axios.post("http://localhost:8080/todoList", todoData)
 
-      dispatch(fetchTodoList({ page: 1, limit: 6 }))
+      dispatch(fetchTodoList({ page: todo.todoListCurrentPage, limit: defaultPageLimit }))
 
       return result.data
     } catch (error) {
@@ -47,11 +52,13 @@ export const createTodo = createAsyncThunk("todo/createTodo",
 )
 
 export const editTodoItem = createAsyncThunk("todo/editTodoItem",
-  async ({ id, updatedItem }, { rejectWithValue, dispatch }) => {
+  async ({ id, updatedItem }, { rejectWithValue, dispatch, getState }) => {
+    const { todo } = getState();
+
     try {
       const result = await axios.patch(`http://localhost:8080/todoList/${id}`, updatedItem)
 
-      dispatch(fetchTodoList({ page: 1, limit: 6 }))
+      dispatch(fetchTodoList({ page: todo.todoListCurrentPage, limit: defaultPageLimit }))
 
       return result.data
     } catch (error) {
@@ -61,11 +68,13 @@ export const editTodoItem = createAsyncThunk("todo/editTodoItem",
 )
 
 export const deleteTodoItem = createAsyncThunk("todo/deleteTodoItem",
-  async (id, { rejectWithValue, dispatch }) => {
+  async (id, { rejectWithValue, dispatch, getState }) => {
+    const { todo } = getState();
+
     try {
       const result = await axios.delete(`http://localhost:8080/todoList/${id}`)
 
-      dispatch(fetchTodoList({ page: 1, limit: 6 }))
+      dispatch(fetchTodoList({ page: todo.todoListCurrentPage, limit: defaultPageLimit }))
 
       return result.data
     } catch (error) {
@@ -83,6 +92,9 @@ export const todoSlice = createSlice({
     },
     setTodoListTotalCount: (state, action) => {
       state.todoListTotalCount = action.payload
+    },
+    setTodoListCurrentPage: (state, action) => {
+      state.todoListCurrentPage = action.payload
     },
     setTodoModal: (state, action) => {
       state.todoModal = action.payload
@@ -117,7 +129,8 @@ export const { setTodoList,
   setEditedItemData,
   setIsHideCompleted,
   setFilterDependencies,
-  setTodoListTotalCount
+  setTodoListTotalCount,
+  setTodoListCurrentPage
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

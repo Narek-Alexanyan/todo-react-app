@@ -16,7 +16,7 @@ const ModalWrapper = ({ isOpen, closeModal, children }) => {
       unmountOnExit
     >
       <div className="fixed z-20 top-0 left-0 w-full h-screen bg-todo-gray/20">
-        <div ref={transitionRef} className="w-fit mx-auto mt-32">
+        <div ref={transitionRef} className="w-fit mx-auto mt-32 sm:w-full sm:h-full sm:mt-0">
           {children}
         </div>
       </div>

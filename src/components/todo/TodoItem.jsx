@@ -77,7 +77,10 @@ const TodoItem = ({ todoData }) => {
           {todoData.title}
         </h5>
         <div ref={dropDownRef} className="relative">
-          <IconButton onClick={() => setIsDropDownOpen((prev) => !prev)}>
+          <IconButton
+            className="w-6 h-6"
+            onClick={() => setIsDropDownOpen((prev) => !prev)}
+          >
             <DotsHorizontalIcon />
           </IconButton>
           <Dropdown

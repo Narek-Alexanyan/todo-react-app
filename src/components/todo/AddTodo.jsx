@@ -33,6 +33,13 @@ const AddTodo = () => {
         tags: editedData?.tags,
       });
     }
+    return () => {
+      setTodoForm((prev) => ({
+        ...prev,
+        title: "",
+        description: "",
+      }));
+    };
   }, [isModalOpen]);
 
   const handleSelectedList = useCallback((selectedList) => {
@@ -40,13 +47,15 @@ const AddTodo = () => {
   }, []);
 
   const addTodo = () => {
-    dispatch(createTodo(todoForm));
-    closeModal();
-    setTodoForm({
-      title: "",
-      description: "",
-      tags: [],
-    });
+    if (todoForm.title) {
+      dispatch(createTodo(todoForm));
+      closeModal();
+      setTodoForm({
+        title: "",
+        description: "",
+        tags: [],
+      });
+    }
   };
 
   const editTodo = () => {
@@ -73,7 +82,7 @@ const AddTodo = () => {
 
   return (
     <ModalWrapper isOpen={isModalOpen} closeModal={closeModal}>
-      <div className="w-[567px] max-w-full bg-todo-white p-5 rounded-lg">
+      <div className="w-[567px] max-w-full bg-todo-white p-5 rounded-lg sm:h-full">
         <div className="flex items-center justify-between">
           <button className="text-base text-todo-gray" onClick={closeModal}>
             cancel
@@ -102,13 +111,13 @@ const AddTodo = () => {
             }
           />
         </div>
-        <div className="mt-5">
+        <div className="mt-5 sm:w-44">
           <p className="text-xl text-todo-black block font-medium mb-2">Tags</p>
           <TagList
             list={tags}
             tags={editedData.tags}
             isModal={true}
-            className="gap-6"
+            className="sm:flex-col gap-6"
             handleList={handleSelectedList}
           />
         </div>

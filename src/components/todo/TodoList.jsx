@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import TodoItem from "./TodoItem";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTodoList } from "../../features/todo/todoSlice";
+import {
+  fetchTodoList,
+  setTodoListCurrentPage,
+} from "../../features/todo/todoSlice";
 import { useTodoFilter } from "../../hooks/useTodoFilter";
 import Pagination from "../UI/pagination/Pagination";
 import LoadingSpinner from "../UI/spinners/LoadingSpinner.svg";
@@ -17,8 +20,8 @@ const TodoList = () => {
     (state) => state.todo.todoListTotalCount
   );
   const pending = useSelector((state) => state.todo.status === "pending");
+  const currentPage = useSelector(state => state.todo.todoListCurrentPage)
 
-  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     dispatch(fetchTodoList({ page: currentPage, limit: PageSize }));
@@ -29,12 +32,20 @@ const TodoList = () => {
     todoFilter.tagsFilter,
   ]);
 
+  const handleCurrentPage = (page) => {
+    dispatch(setTodoListCurrentPage(page));
+  };
+
   if (pending) {
     return (
       <div className="w-full">
         <img src={LoadingSpinner} alt="loading" className="mx-auto" />
       </div>
     );
+  }
+
+  if (!FilteredList.length) {
+    return <h1>Todo List is empty</h1>;
   }
 
   return (
@@ -45,11 +56,11 @@ const TodoList = () => {
         ))}
       </div>
       <Pagination
-        className=""
+        className="mt-4"
         currentPage={currentPage}
         totalCount={todoListTotalCount}
         pageSize={PageSize}
-        onPageChange={(page) => setCurrentPage(page)}
+        onPageChange={(page) => handleCurrentPage(page)}
       />
     </div>
   );
